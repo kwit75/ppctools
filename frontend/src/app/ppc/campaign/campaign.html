@@ -1,0 +1,56 @@
+<div data-ng-show="campaigns">
+  <h3></h3>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Campaigns list
+        <small> |<a href="#" data-toggle="popover" title="Campaigns list" data-content="A green checkmark indicates that the ACoS profit zone has been set for this campaign. A red X indicates that an ACoS profit zone has not been set for this campaign. For those campaigns that you did not set a profit zone, we will designate a universal ACoS profit zone of .1- 40%. This universal ACoS profit zone can be adjusted in the settings tab.
+
+Campaigns highlighted in Green indicates that optimizations are available. Click on that campaign to optimize.
+">More info <i class="fa fa-info-circle"></i></a>
+        </small></h3>
+    </div>
+    <div class="panel-body">
+      <table datatable="ng" dt-options="dtOptions" class="row-border hover">
+        <thead>
+        <tr>
+          <th></th>
+          <th>Campaign</th>
+          <th>Profit</th>
+          <th>Revenue</th>
+          <th>AD Spend</th>
+          <th>AcoS,%</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in campaigns">
+          <td>
+          <span class="label-success label" ng-if="item.acos1!==null">
+          <span style="color:white"  class="glyphicon glyphicon-ok" ></span></span>
+                 <span class="label-danger label" ng-if="item.acos1===null">
+          <span style="color:white"  class="glyphicon glyphicon-remove" data-toggle="tooltip" title="Please add ACoS"></span></span>
+          </td>
+          <td><a data-ui-sref="ppc.campaigns({campaign: item.Campaign})">{{ item.Campaign }}</a></td>
+          <td>{{ item.Profit | number :0}}</td>
+          <td>{{ item.Revenue | number :0 }}</td>
+          <td>{{ item.Cost | number :0 }}</td>
+          <td>{{ item.Cost/item.Revenue*100 | number :1 }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+    $('body').on('click', function (e) {
+      $('[data-toggle="popover"]').each(function () {
+        //the 'is' for buttons that trigger popups
+        //the 'has' for icons within a button that triggers a popup
+        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+          $(this).popover('hide');
+        }
+      });
+    });
+  });
+</script>

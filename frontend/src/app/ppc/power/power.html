@@ -1,0 +1,362 @@
+<div data-ng-show="campaigns">
+  <h3></h3>
+  <ul class="nav nav-tabs">
+    <li><a data-toggle="tab" href="#mtab1">Seed Campaigns</a></li>
+    <li><a data-toggle="tab" href="#mtab3">Keyword Expansion</a></li>
+    <li class="active"><a data-toggle="tab" href="#mtab2">Search Term Expansion</a></li>
+    <li><a data-toggle="tab" href="#mtab4">Campaign Name Selector</a></li>
+
+    <li class="pull-right">
+      <a href="#" data-toggle="popover" data-placement="left" title="Power PPC"
+         data-content="Power PPC allows you to discover the exact customer search terms that resulted in profit for your business. This way you can turn those customer search terms into keywords for new PPC campaigns. First, select as many campaigns as you would like.  Then determine the ACoS that is in your profit zone. Lastly, copy these winning customer search terms to the clipboard so that you can easily enter them into a new PPC campaign. Keep checking back for the most recent customer search terms and don’t forget to keep updating your reports so that we can help you easily find these golden nuggets.">
+        More information
+        <i class="fa fa-info-circle"></i>
+      </a>
+  </ul>
+  <div class="tab-content">
+    <div id="mtab3" class="tab-pane fade">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;SKU's
+                List
+              </h3></div>
+            <div class="panel-body">
+              <table datatable="ng" dt-options="dtOptions3" class="row-border hover" width="100%">
+                <thead>
+                <tr>
+                  <th><input
+                    type="checkbox"
+                    name="selectedallSKUs1"
+                    value="1ALLSKUS1"
+                    ng-checked="selall1"
+                    ng-click="toggleSelection1('1ALLSKUS1')"
+                  ></th>
+                  <th>SKU</th>
+                  <th>Products name</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in SKUs">
+                  <td><input
+                    type="checkbox"
+                    name="selectedSKUs[]"
+                    value="{{item.SKU}}"
+                    ng-checked="selection1.indexOf(item.SKU) > -1"
+                    ng-click="toggleSelection1(item.SKU)"
+                  ></td>
+                  <td><a data-ui-sref="ppc.product({id: item.id})">{{ item.SKU }}</a></td>
+                  <td><a data-ui-sref="ppc.product({id: item.id})">{{ item["product-name"]}}</a></td>
+
+
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Campaigns
+                List
+              </h3></div>
+            <div class="panel-body">
+              <table datatable="ng" dt-options="dtOptions4" class="row-border hover" width="100%">
+                <thead>
+                <th><input
+                  type="checkbox"
+                  name="selectedallSKUs2"
+                  value="1ALLSKUS1"
+                  ng-checked="selall2"
+                  ng-click="toggleSelection2('1ALLSKUS1')"
+                ></th>
+                <th>Campaign</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in campaigns1">
+                  <td><input
+                    type="checkbox"
+                    name="selectedCampaigns2[]"
+                    value="{{item.Campaign}}"
+                    ng-checked="selection2.indexOf(item.Campaign) > -1"
+                    ng-click="toggleSelection2(item.Campaign)"
+                  ></td>
+                  <td><a data-ui-sref="ppc.campaigns({campaign: item.Campaign})">{{ item.Campaign }}</a></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;&nbsp;ACoS
+            profit zone</h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-lg-6">ACoS profit zone, %</div>
+            <div class="col-lg-3" align="right">
+              <input type="text" data-ng-model="saveacos1" class="form-control"/>
+            </div>
+            <div class="col-lg-3" align="left">
+              <button class="btn btn-large btn-info" data-ng-click="save_continue1()">Continue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" data-ng-show="showme1">
+
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Top keywords<br>
+                <small>
+                  <button data-ng-click="copyall1()">Copy all</button>
+                </small>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <table datatable="ng" dt-options="dtOptions5" class="row-border hover" width="100%">
+                <thead>
+                <tr>
+                  <th>Keywords</th>
+                  <th>Profit</th>
+                  <th>Gross revenue</th>
+
+                </thead>
+                <tbody>
+                <tr ng-repeat="keyword in searchterms1" width="100%">
+                  <td><a ng-click="addsearch1(keyword.Keyword)">{{keyword.Keyword}}</a></td>
+                  <td>{{ keyword.Profit1 | number :2 }}</td>
+                  <td>{{ keyword.Revenue | number :2 }}</td>
+
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Selected
+                keywords
+                <small>
+                  <button clipboard text="copiedkeywords1" on-copied="success1()" on-error="fail1(err)">Copy to
+                    clipboard
+                  </button>
+                </small>
+              </h3>
+              <div class="panel-body">
+                <textarea ng-model="copiedkeywords1" class="form-control" rows="20"></textarea>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="mtab2" class="tab-pane fade in active">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Campaigns
+            list</h3>
+        </div>
+        <div class="panel-body">
+          <table datatable="ng" dt-options="dtOptions" class="row-border hover">
+            <thead>
+            <th><input
+              type="checkbox"
+              name="selectedallSKUs"
+              value="1ALLSKUS1"
+              ng-checked="selall"
+              ng-click="toggleSelection('1ALLSKUS1')"
+            ></th>
+            <th>Campaign</th>
+            <th>Profit</th>
+            <th>Revenue</th>
+            <th>AD Spend</th>
+            <th>AcoS,%</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in campaigns">
+              <td><input
+                type="checkbox"
+                name="selectedCampaigns[]"
+                value="{{item.Campaign}}"
+                ng-checked="selection.indexOf(item.Campaign) > -1"
+                ng-click="toggleSelection(item.Campaign)"
+              ></td>
+              <td><a data-ui-sref="ppc.campaigns({campaign: item.Campaign})">{{ item.Campaign }}</a></td>
+              <td>{{ item.Profit | number :0}}</td>
+              <td>{{ item.Revenue | number :0 }}</td>
+              <td>{{ item.Cost | number :0 }}</td>
+              <td>{{ item.Cost/item.Revenue*100 | number :1 }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;&nbsp;ACoS
+            profit zone</h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-lg-6">ACoS profit zone, %</div>
+            <div class="col-lg-3" align="right">
+              <input type="text" data-ng-model="saveacos" class="form-control"/>
+            </div>
+            <div class="col-lg-3" align="left">
+              <button class="btn-primary" data-ng-click="save_continue()">Continue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" data-ng-show="showme">
+
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Positive
+                    Exact Search Terms.<br>
+                    <small>ACOS Profit Zone is between 0.1% and {{acoszone}}%
+                      |
+                      <button data-ng-click="copyall()">Copy all</button>
+                      |
+                      <button data-ng-click="removekeywords()">Remove Keywords</button>
+                    </small>
+                  </div>
+                  <div class="col-lg-3" align="right">
+                    <small>Date range:</small>
+                  </div>
+                  <div class="col-lg-3"><input date-range-picker class="form-control date-picker" type="text"
+                                               ng-model="datePicker.date"
+                                               options="dateRangeOptions"/>
+                  </div>
+                </div>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <table datatable="ng" dt-options="dtOptions2" class="row-border hover" width="100%">
+                <thead>
+                <tr>
+                  <th>Search term</th>
+                  <th>Ad spend</th>
+                  <th>ACoS, %</th>
+                  <th>Gross revenue</th>
+
+                </thead>
+                <tbody>
+                <tr ng-repeat="keyword in searchterms" width="100%">
+                  <td><a ng-click="addsearch(keyword.Search)">{{keyword.Search}}</a></td>
+                  <td>{{ keyword.Cost | number :2 }}</td>
+                  <td>{{ keyword.acos | number :2}}</td>
+                  <td>{{ keyword.Revenue | number :2 }}</td>
+
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Selected
+                keywords
+                <small>
+                  <button clipboard text="copiedkeywords" on-copied="success()" on-error="fail(err)">Copy to clipboard
+                  </button>
+                </small>
+              </h3>
+              <div class="panel-body">
+                <textarea ng-model="copiedkeywords" class="form-control" rows="20"></textarea>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="mtab4" class="tab-pane fade">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Campaign
+                name generator
+              </h3></div>
+            <div class="panel-body">
+              <label class="control-label">Name</label>
+              <input type="text" class="form-control" required="required" name="title"
+                     placeholder="SKU name"
+                     data-ng-model="generator.name"
+              />
+              <label class="control-label">AcoS</label>
+              <input type="text" class="form-control" required="required" name="title"
+                     placeholder="AcoS"
+                     data-ng-model="generator.acos"
+              />
+              <label class="control-label">Date range</label>
+              <input date-range-picker class="form-control date-picker" type="text"
+                     placeholder="Date range"
+                     ng-model="datePicker3.date"
+                     options="dateRangeOptions3"/>
+              <br>
+              <button class="btn btn-large btn-info" data-ng-click="generate()">Generate</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Result
+              </h3></div>
+            <div class="panel-body">
+              <label class="control-label">Generated name</label>
+              <input type="text" class="form-control" required="required" name="title"
+                     data-ng-model="generator.generated"
+              />
+              <br><br>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+    $('body').on('click', function (e) {
+      $('[data-toggle="popover"]').each(function () {
+        //the 'is' for buttons that trigger popups
+        //the 'has' for icons within a button that triggers a popup
+        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+          $(this).popover('hide');
+        }
+      });
+    });
+  });
+</script>

@@ -1,0 +1,206 @@
+<h3></h3>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <div class="row">
+            <div class="col-lg-6">
+              <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Statistics
+            </div>
+            <div class="col-lg-3" align="right">
+              <small>Date range:</small>
+            </div>
+            <div class="col-lg-3"><input date-range-picker class="form-control date-picker" type="text"
+                                         ng-model="datePicker.date"
+                                         options="dateRangeOptions"/>
+            </div>
+          </div>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-lg-3" align="center">
+            <h2>{{upprofit| number : 0}}</h2>
+            Profit
+            <h2> {{upimpressions | number : 0}}</h2>
+            Impressions
+          </div>
+          <div class="col-lg-3" align="center">
+            <h2>{{uprevenue | number : 0}}</h2>
+            Gross Revenue
+            <h2>{{upctr | number : 2}}</h2>
+            CTR (%)
+          </div>
+          <div class="col-lg-3" align="center">
+            <h2> {{upacos | number : 1}}</h2>
+            AcoS (%)
+            <h2> {{upclicks | number : 0}}</h2>
+            Clicks
+          </div>
+          <div class="col-lg-3" align="center">
+            <h2> {{upcost | number : 2}}</h2>
+            Ad Spend
+            <h2> {{upcr | number : 2}}</h2>
+            CR (%)
+          </div>
+        </div>
+      </div>
+    </div>
+    <div align="center" class="panel panel-default">
+      <div id="funnel"></div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-lg-6">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Charts
+              <small> |<a href="#" data-toggle="popover" title="Charts"
+                          data-content="You can click on each component to add or subtract it from the chart. Profit margins can be set for each product in the products tab. If you don’t have a profit margin set for a product, we will designate a universal profit margin of  30%. This universal profit margin can be adjusted in the settings tab.">More
+                info <i class="fa fa-info-circle"></i></a>
+              </small>
+            </h3>
+          </div>
+          <div class="col-lg-3" align="right">
+            <small>Date range:</small>
+          </div>
+          <div class="col-lg-3"><input date-range-picker class="form-control date-picker" type="text"
+                                       ng-model="datePicker.date"
+                                       options="dateRangeOptions"/>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <nvd3 options="options" data="data"></nvd3>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Top
+          selling
+          products
+          <small> |<a href="#" data-toggle="popover" title="Top Selling Products"
+                      data-content="Products highlighted in yellow indicates that a profit experiment is underway. Products highlighted in Green indicates that a profit experiment has been completed and a winner has been determined. Click on that product to view results.">More
+            info <i class="fa fa-info-circle"></i></a>
+          </small>
+        </h3>
+      </div>
+      <div class="col-lg-3" align="right">
+        <small>Date range:</small>
+      </div>
+      <div class="col-lg-3"><input date-range-picker class="form-control date-picker" type="text"
+                                   ng-model="datePicker.date"
+                                   options="dateRangeOptions"/>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <table datatable="ng" dt-options="dtOptions" class="row-border hover">
+      <thead>
+      <tr>
+        <th>SKU</th>
+        <th>Profit</th>
+        <th>Product</th>
+        <th>Revenue</th>
+        <th>AD Spend</th>
+        <th>AcoS,%</th>
+
+        <!--      <th>Impressions</th>
+              <th>Clicks</th>
+              <th>CTR,%</th> -->
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="item in topSKU">
+        <td><a data-ui-sref="ppc.product({id: item.id})">{{ item.SKU }}</a></td>
+        <td>{{ item.Revenue*item.Profit-item.Cost | number :0}}</td>
+        <td><a data-ui-sref="ppc.product({id: item.id})">{{ item.Product }}</a></td>
+        <td>{{ item.Revenue | number :0 }}</td>
+        <td>{{ item.Cost | number :0 }}</td>
+        <td>{{ item.Cost/item.Revenue*100 | number :1 }}</td>
+
+        <!--
+              <td>{{ item.Cost/item.Clicks | number :2 }}</td>
+              <td>{{item.Impressions | number :0 }}</td>
+              <td>{{ item.Clicks | number :0 }}</td>
+              <td>{{ item.Clicks/item.Impressions*100 | number :2 }}</td> -->
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Top
+          campaigns
+          <small> |<a href="#" data-toggle="popover" title="Top Campaigns"
+                      data-content="Products highlighted in Green indicates that optimizations are available. Click on that campaign to optimize.">More
+            info <i class="fa fa-info-circle"></i></a>
+          </small>
+        </h3>
+      </div>
+      <div class="col-lg-3" align="right">
+        <small>Date range:</small>
+      </div>
+      <div class="col-lg-3"><input date-range-picker class="form-control date-picker" type="text"
+                                   ng-model="datePicker.date"
+                                   options="dateRangeOptions"/>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <table datatable="ng" dt-options="dtOptions1" class="row-border hover">
+      <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>Profit</th>
+        <th>Revenue</th>
+        <th>AD Spend</th>
+        <th>AcoS,%</th>
+        <th>CPC</th>
+        <th>Impressions</th>
+        <th>Clicks</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="item in topCampaigns">
+        <td><a data-ui-sref="ppc.campaigns({campaign: item.Campaign})">{{ item.Campaign }}</a></td>
+        <td>{{ item.Profit | number :0}}</td>
+        <td>{{ item.Revenue | number :0 }}</td>
+        <td>{{ item.Cost | number :0 }}</td>
+        <td>{{ item.Cost/item.Revenue*100 | number :1 }}</td>
+        <td>{{ item.Cost/item.Clicks | number :2 }}</td>
+        <td>{{item.Impressions | number :0 }}</td>
+        <td>{{ item.Clicks | number :0 }}</td>
+
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+    $('body').on('click', function (e) {
+      $('[data-toggle="popover"]').each(function () {
+        //the 'is' for buttons that trigger popups
+        //the 'has' for icons within a button that triggers a popup
+        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+          $(this).popover('hide');
+        }
+      });
+    });
+  });
+</script>

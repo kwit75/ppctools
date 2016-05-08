@@ -1,0 +1,28 @@
+{
+    "name": "PPCEntourage",
+    "version": "0.0.1",
+    "description": "PPC Entourage",
+    "keywords": [
+        "sails.js",
+        "backend",
+        "REST",
+        "API",
+        "JWT",
+        "JSON Web Token",
+        "Passport.js",
+        "frontend",
+        "angular",
+        "slush",
+        "slush-angular"
+    ],
+    "main": "",
+    "dependencies": {},
+    "devDependencies": {},
+    "scripts": {
+        "install": "git submodule update --init --recursive && cd backend && npm install && cd ../frontend && npm install",
+        "start": "(cd backend && sails lift) & (cd frontend && gulp serve)",
+        "test": "cd backend && mocha"
+    },
+    "author": "KWiT",
+    "license": "MIT"
+}

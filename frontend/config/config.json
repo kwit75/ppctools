@@ -1,0 +1,9 @@
+{
+  "backendUrl": "http://138.201.48.85:1337",
+  "frontend": {
+    "ports": {
+      "production": 3000,
+      "development": 3001
+    }
+  }
+}

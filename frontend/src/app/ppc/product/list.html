@@ -1,0 +1,61 @@
+<div data-ng-show="products">
+  <h3></h3>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;SKU list
+        <small> |<a href="#" data-toggle="popover" title="Products List" data-content="A green checkmark indicates that the profit margin has been set for this product. A red X indicates that a profit margin has not been set for this product. For those products that you did not set margins, we will designate a universal profit margin of  30%. This universal profit margin can be adjusted in the settings tab.
+      Products highlighted in Green indicates that optimizations are available. Click on that product to optimize. Products highlighted in yellow indicates that a profit experiment is underway. Products highlighted in Blue indicates that a profit experiment has been completed and a winner has been determined. ">More
+          info <i class="fa fa-info-circle"></i></a>
+        </small>
+      </h3>
+    </div>
+    <div class="panel-body">
+
+      <table datatable="ng" dt-options="dtOptions" class="row-border hover">
+        <thead>
+        <tr>
+          <th>Status</th>
+          <th>SKU</th>
+          <th>ASIN</th>
+          <th>Image</th>
+          <th>Products name</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="product in products">
+          <td>
+          <span class="label-success label" ng-if="(product.average_selling_price!==null) && (product.amazon_FBA_fees!==null) && (product.additional_per_unit_costs!==null)
+        && (product.total_shipping_costs!==null) && (product.cost_per_unit!==null)">
+          <span style="color:white" class="glyphicon glyphicon-ok"></span></span>
+                 <span class="label-danger label" ng-if="(product.average_selling_price===null) || (product.amazon_FBA_fees===null) || (product.additional_per_unit_costs===null)
+        && (product.total_shipping_costs===null) || (product.cost_per_unit===null)">
+          <span style="color:white" class="glyphicon glyphicon-remove" data-toggle="tooltip"
+                title="Please add profit margins"></span></span>
+          </td>
+          <td><a data-ui-sref="ppc.product({id: product.id})">{{ product.sku }}</a></td>
+          <td>{{ product.asin }}</td>
+          <td><img src="{{ product.image_sm }}" ng-if="product.image_sm"></td>
+          <td><a data-ui-sref="ppc.product({id: product.id})">{{ product["product-name"]}}</a></td>
+
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+    $('body').on('click', function (e) {
+      $('[data-toggle="popover"]').each(function () {
+        //the 'is' for buttons that trigger popups
+        //the 'has' for icons within a button that triggers a popup
+        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+          $(this).popover('hide');
+        }
+      });
+    });
+  });
+</script>

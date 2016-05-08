@@ -1,0 +1,10 @@
+node_modules/*
+bower_components/*
+config.js
+.nodemonignore
+.sass-cache
+.tmp
+
+# IDE specific
+*.iml
+.idea

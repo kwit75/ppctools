@@ -1,0 +1,80 @@
+<h3>Settings</h3>
+
+<div class="row">
+  <div class="col-lg-4">
+    <h4 class="text-muted"><img src="/assets/icons/png/us.png">&nbsp;US Amazon Integration</h4>
+    <form class="form-vertical" role="form" name="AddSellerAccountForm"
+          data-ng-submit="AddSellerAccount()"
+    >
+      <div class="form-group" style="margin-top: 10px;">
+        <label class="control-label">Amazon SellerID</label>
+        <input type="text" class="form-control" required="required" name="title" placeholder="Amazon SellerID"
+               data-ng-model="seller.SellerID"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Amazon MWSAuthorizationToken</label>
+        <input type="text" class="form-control" required="required" name="title"
+               placeholder="Amazon MWSAuthorizationToken"
+               data-ng-model="seller.MWSAuthToken"
+        />
+      </div>
+
+      <div class="visible-lg">
+        <button type="submit" class="btn btn-primary"
+                data-ng-disabled="!AddSellerAccountForm.$valid">
+          Save
+        </button>
+
+      </div>
+    </form>
+  </div>
+
+  <div class="col-lg-4">
+    <h4 class="text-muted">Upload Reports</h4>
+
+    <div class="form-group">
+      <div class="form-group">
+        <label class="control-label">Campaign Performance Report</label>
+        <div ng-if="itemCount" class="bg-info">Total: {{itemCount}} records found.</div>
+        <div>Add a new report:               <input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Search Term Report</label>
+        <div ng-if="itemCount" class="bg-info">Total: {{}} records found.</div>
+        <div>Add a new report:               <input type="file" name="file1" onchange="angular.element(this).scope().uploadFile1(this.files)"/>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+  <div class="col-lg-4">
+    <h4 class="text-muted">Universal values</h4>
+    <form class="form-vertical" role="form" name="AddUniversalForm"
+          data-ng-submit="AddUniversal()"
+    >
+      <div class="form-group" style="margin-top: 10px;">
+        <label class="control-label">Universal Profit Margin, %</label>
+        <input type="text" class="form-control" required="required" name="title" placeholder="Universal Profit Margin"
+               data-ng-model="universal.profit"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Universal ACOS Profit Zone, %</label>
+        <input type="text" class="form-control" required="required" name="title"
+               placeholder="Universal ACOS Profit Zone"
+               data-ng-model="universal.acos"
+        />
+      </div>
+
+    </form>
+  </div>
+
+</div>
+

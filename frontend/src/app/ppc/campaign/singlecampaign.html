@@ -1,0 +1,386 @@
+<div data-ng-show="!KPI">
+  <h3></h3>
+</div>
+
+<div data-ng-show="KPI">
+  <h3>{{campaignName}}</h3>
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#mtab1">Start</a></li>
+    <li><a data-toggle="tab" href="#mtab2">Keyword Optimization</a></li>
+    <li><a data-toggle="tab" href="#mtab3">Negative Exact Optimization</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="mtab1" class="tab-pane fade in active">
+
+
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Campaign
+                    Statistics
+                  </div>
+                  <div class="col-lg-3" align="right">
+                    <small>Date range:</small>
+                  </div>
+                  <div class="col-lg-3"><input date-range-picker class="form-control date-picker" type="text"
+                                               ng-model="datePicker.date"
+                                               options="dateRangeOptions"/>
+
+                  </div>
+                </div>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-lg-3" align="center">
+                  <h2>{{upprofit| number : 0}}</h2>
+                  Profit
+                  <h2> {{upimpressions | number : 0}}</h2>
+                  Impressions
+                </div>
+                <div class="col-lg-3" align="center">
+                  <h2>{{uprevenue | number : 0}}</h2>
+                  Gross Revenue
+                  <h2>{{upctr | number : 2}}</h2>
+                  CTR (%)
+                </div>
+                <div class="col-lg-3" align="center">
+                  <h2> {{upacos | number : 1}}</h2>
+                  AcoS (%)
+                  <h2> {{upclicks | number : 0}}</h2>
+                  Clicks
+                </div>
+                <div class="col-lg-3" align="center">
+                  <h2> {{upcost | number : 0}}</h2>
+                  Ad Spend
+                  <h2> {{upcr | number : 2}}</h2>
+                  CR (%)
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;&nbsp;ACoS
+                profit zone</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-lg-6">ACoS profit zone, %</div>
+                <div class="col-lg-3" align="right">
+                  <input type="text" data-ng-model="saveacos" class="form-control"/>
+                </div>
+                <div class="col-lg-3" align="left">
+                  <button class="btn-primary" data-ng-click="save_acos()">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;&nbsp;SKU's sellings above ACOS</h3>
+            </div>
+            <div class="panel-body">
+              <table datatable="ng" dt-options="dtOptions" class="row-border hover" width="100%">
+                <thead>
+                <tr>
+                  <th>SKU</th>
+                  <th>Name</th>
+                  <th>ACoS</th>
+                </thead>
+                <tbody>
+                <tr ng-repeat="keyword in belowacos" width="100%">
+                  <td>{{ keyword.SKU}}</td>
+                  <td>{{ keyword.Name}}</td>
+                  <td>{{ keyword.ACoS | number :2 }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Charts
+                <small> |<a href="#" data-toggle="popover" title="Charts" data-content="You can click on each component to add or subtract it from the chart.">More info <i class="fa fa-info-circle"></i></a>
+                </small></h3>
+
+            </div>
+            <div class="panel-body">
+              <nvd3 options="options" data="data"></nvd3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div id="mtab2" class="tab-pane fade">
+
+      <div class="row">
+
+        <div class="col-lg-6">
+          <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#ktab1">Profitable Keywords</a></li>
+            <li><a data-toggle="tab" href="#ktab2">Non-Profitable Keywords</a></li>
+            <li class="pull-right">
+              <a href="#" data-toggle="popover" data-placement="left" title="Keyword Optimization" data-content="Here you can see profitable vs non profitable keywords. For profitable keywords, you can track the success of that keyword within your campaign over time. If you notice that impressions and profits have reduced, consider increasing your bid for that keyword.
+
+You may want to consider setting up a new phrase or exact campaign using these profitable keywords. To do so, simply copy the profitable keywords to the clipboard and enter them into a new campaign in your Amazon PPC campaign manager.
+">
+                More information
+                <i class="fa fa-info-circle"></i>
+              </a>
+          </ul>
+
+          <div class="tab-content">
+            <div id="ktab1" class="tab-pane fade in active">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Keywords <small><button data-ng-click="copyall1()">Copy all</button></small>
+                      </div>
+                      <div class="col-lg-3" align="right">
+                        <small>Date range:</small>
+                      </div>
+                      <div class="col-lg-3"><input date-range-picker class="form-control date-picker" type="text"
+                                                   ng-model="datePicker.date"
+                                                   options="dateRangeOptions"/>
+                      </div>
+                    </div>
+                  </h3>
+                </div>
+                <div class="panel-body">
+                  <table datatable="ng" dt-options="dtOptions" class="row-border hover" width="100%">
+                    <thead>
+                    <tr>
+                      <th>Keyword</th>
+                      <th>Profit</th>
+                      <th>Gross revenue</th>
+                      <th>Ad spend</th>
+                      <th>Impressions</th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="keyword in keywords" width="100%">
+                      <td><a ng-click="addsearch1(keyword.Keyword)"><span class="glyphicon glyphicon glyphicon-copy" aria-hidden="true"></span></a>
+                        <a ng-click="changestats(keyword.Keyword)">{{keyword.Keyword}}</a></td>
+                      <td>{{ keyword.Revenue*keyword.Profit-keyword.Cost | number :0}}</td>
+                      <td>{{ keyword.Revenue | number :0 }}</td>
+                      <td>{{ keyword.Cost | number :0 }}</td>
+                      <td>{{ keyword.Impressions | number :0 }}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div id="ktab2" class="tab-pane fade">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Non-Profitable
+                        Keywords  <small> |<a href="#" data-toggle="popover" title="Non-Profitable Keywords" data-content="Non-Profitable Keywords are organized by Ad Spend. This way you can determine which keyword for a given campaign is costing you the most money and consider turning it off. Please note that very new keywords might need time before you can accurately determine if it is a non profitable keyword. We recommend a minimum of 3-4 weeks. You can turn a keyword off by going into your PPC Campaign Manager, selecting the appropriate campaign, search for the desired keyword and pause it. ">More info <i class="fa fa-info-circle"></i></a>
+                      </small>
+                  <small><button data-ng-click="copyall1()">Copy all</button></small>
+                      </div>
+                      <div class="col-lg-3" align="right">
+                        <small>Date range:</small>
+                      </div>
+                      <div class="col-lg-3"><input date-range-picker class="form-control date-picker" type="text"
+                                                   ng-model="datePicker.date"
+                                                   options="dateRangeOptions"/>
+                      </div>
+                    </div>
+                  </h3>
+                </div>
+                <div class="panel-body">
+                  <table datatable="ng" dt-options="dtOptions1" class="row-border hover" width="100%">
+                    <thead>
+                    <tr width="100%">
+                      <th>Keyword</th>
+                      <th>Profit</th>
+                      <th>Gross revenue</th>
+                      <th>Ad spend</th>
+                      <th>Impressions</th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="keyword in badkeywords" width="100%">
+                      <td><a ng-click="addsearch1(keyword.Keyword)"><span class="glyphicon glyphicon glyphicon-copy" aria-hidden="true"></span></a>
+
+                        <a ng-click="changestats(keyword.Keyword)">{{keyword.Keyword}}</a></td>
+                      <td>{{ keyword.Revenue*keyword.Profit-keyword.Cost | number :0}}</td>
+                      <td>{{ keyword.Revenue | number :0 }}</td>
+                      <td>{{ keyword.Cost | number :0 }}</td>
+                      <td>{{ keyword.Impressions | number :0 }}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Selected
+                keywords
+                <small>
+                  <button clipboard text="copiedkeywords1" on-copied="success()" on-error="fail(err)">Copy to clipboard
+                  </button>
+
+                </small>
+              </h3>
+              <div class="panel-body">
+                <textarea ng-model="copiedkeywords1" class="form-control" rows="20"></textarea>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#">Charts</a></li>
+          </ul>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Keyword
+                chart : {{selectedKeyword}}
+              </h3>
+            </div>
+            <div class="panel-body">
+              <nvd3 options="options1" data="data1"></nvd3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div id="mtab3" class="tab-pane fade">
+      <div class="row">
+
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Negative
+                    Exact Search Terms.  <small> |<a data-toggle="modal" data-target="#myModal">More info <i class="fa fa-info-circle"></i></a>
+                  </small><br>
+              <small>ACOS Profit Zone is between 0.1% and <input ng-model="acoszone" type="text">%
+                      <button data-ng-click="setacos()">Set</button>
+                      |
+                      <button data-ng-click="copyall()">Copy all</button>
+                    </small>
+                  </div>
+                  <div class="col-lg-3" align="right">
+                    <small>Date range:</small>
+                  </div>
+                  <div class="col-lg-3"><input date-range-picker class="form-control date-picker" type="text"
+                                               ng-model="datePicker.date"
+                                               options="dateRangeOptions"/>
+                  </div>
+                </div>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <table datatable="ng" dt-options="dtOptions2" class="row-border hover" width="100%">
+                <thead>
+                <tr>
+                  <th>Search term</th>
+                  <th>Ad spend</th>
+                  <th>ACoS, %</th>
+                  <th>Gross revenue</th>
+
+                </thead>
+                <tbody>
+                <tr ng-repeat="keyword in searchterms" width="100%">
+                  <td><a ng-click="addsearch(keyword.Search)">{{keyword.Search}}</a></td>
+                  <td>{{ keyword.Cost | number :2 }}</td>
+                  <td>{{ keyword.acos | number :2}}</td>
+                  <td>{{ keyword.Revenue | number :2 }}</td>
+
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Selected
+                keywords
+                <small>
+                  <button clipboard text="copiedkeywords" on-copied="success()" on-error="fail(err)">Copy to clipboard
+                  </button>
+                  <button ng-click="removenumbers()">Remove numbers
+                  </button>
+                </small>
+              </h3>
+              <div class="panel-body">
+                <textarea ng-model="copiedkeywords" class="form-control" rows="20"></textarea>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Negative Exact Optimization</h4>
+        </div>
+        <div class="modal-body">
+          <p>Here you can see the exact customer search terms that generated clicks and ad spend but did not lead to sales. Negative exact search terms are organized by ad spend. This way you determine the exact customer search terms that are costing you the most money so you can add them as negative exact keywords in your campaign.  Click on the customer search term to add that term to the selected keywords list. You can then either  1) copy those search terms to a clipboard 2) Save those search terms to a list or 3) Create a new list of customer search terms
+            <br><br>
+            To add negative exact words to your Amazon PPC campaign, go into your PPC Campaign Manager, select the appropriate campaign, Select campaign settings or the appropriate ad group. Select negative keywords. Paste the keywords and save as Negative Exact.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+    $('body').on('click', function (e) {
+      $('[data-toggle="popover"]').each(function () {
+        //the 'is' for buttons that trigger popups
+        //the 'has' for icons within a button that triggers a popup
+        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+          $(this).popover('hide');
+        }
+      });
+    });
+  });
+</script>
+<!-- Modal -->
+
