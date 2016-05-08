@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="f503bf6b-23b2-4055-a89f-254f69f226f1" name="ppc.tools" url="http://ppc.tools">
+        <fileTransfer host="ppc.tools" port="22" rootFolder="/home/ppctools" accessType="SFTP" password="dfcfdf9fdfefdfc1dfdcdfe9dfd2dfd0dfcbdfcbdfdedff8dfe4dfe6" username="root">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

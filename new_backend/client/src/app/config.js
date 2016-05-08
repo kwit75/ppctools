@@ -5,7 +5,7 @@ angular.module('config')
     facebook: false,
     google: false
   })
-  .constant('REQUIRE_ACCOUNT_VERIFICATION', false)
+  .constant('REQUIRE_ACCOUNT_VERIFICATION', true)
 ;
 //----- end of configuration -----
 angular.module('config')
